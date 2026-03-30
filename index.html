@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAI HAOCHEN | AI Solutions Engineer & Full-Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f1b2d;
+      --navy-light: #1b2a4a;
+      --blue: #2196F3;
+      --blue-glow: #64B5F6;
+      --cyan: #4dd0e1;
+      --white: #f0f4f8;
+      --muted: #8899aa;
+      --card-bg: rgba(27, 42, 74, 0.5);
+      --card-border: rgba(100, 181, 246, 0.12);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::selection {
+      background: var(--blue);
+      color: white;
+    }
+
+    /* ── Grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 27, 45, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.4s;
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue-glow);
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--blue);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(33, 150, 243, 0.08), transparent),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(77, 208, 225, 0.05), transparent);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(100, 181, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 181, 246, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black, transparent);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+    }
+
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: slideUp 0.8s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: slideUp 0.8s 0.4s forwards;
+    }
+
+    .hero h1 .accent {
+      color: var(--blue-glow);
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: slideUp 0.8s 0.6s forwards;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      opacity: 0;
+      animation: slideUp 0.8s 0.8s forwards;
+    }
+
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--blue-glow);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 6rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--blue);
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .about-text p+p {
+      margin-top: 1rem;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .highlight-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.3rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(100, 181, 246, 0.3);
+    }
+
+    .highlight-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .highlight-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Experience ── */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), var(--card-border));
+    }
+
+    .timeline-item {
+      padding-left: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid var(--blue);
+      transition: background 0.3s;
+    }
+
+    .timeline-item:hover::before {
+      background: var(--blue);
+    }
+
+    .timeline-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-role {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-company {
+      font-size: 0.9rem;
+      color: var(--blue-glow);
+      margin-bottom: 0.6rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .tag:hover {
+      border-color: var(--blue);
+      color: var(--blue-glow);
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .skill-group:hover {
+      border-color: rgba(100, 181, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .skill-group-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+
+    .skill-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-pill {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(33, 150, 243, 0.08);
+      border: 1px solid rgba(33, 150, 243, 0.15);
+      border-radius: 6px;
+      color: var(--white);
+      transition: all 0.3s;
+    }
+
+    .skill-pill:hover {
+      background: rgba(33, 150, 243, 0.18);
+      border-color: var(--blue);
+    }
+
+    /* ── Education ── */
+    .edu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: start;
+      transition: border-color 0.3s;
+    }
+
+    .edu-card:hover {
+      border-color: rgba(100, 181, 246, 0.3);
+    }
+
+    .edu-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--cyan);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+      min-width: 100px;
+    }
+
+    .edu-degree {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-school {
+      font-size: 0.95rem;
+      color: var(--blue-glow);
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Certifications ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .cert-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      transition: transform 0.3s, border-color 0.3s;
+      text-align: center;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(100, 181, 246, 0.3);
+    }
+
+    .cert-badge {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ── Contact ── */
+    .contact-section {
+      text-align: center;
+      padding: 6rem 3rem;
+      position: relative;
+    }
+
+    .contact-section .section-title::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .contact-email {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--blue-glow);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .contact-email:hover {
+      color: var(--cyan);
+    }
+
+    .contact-email::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .contact-email:hover::after {
+      transform: scaleX(1);
+    }
+
+    .contact-langs {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid var(--card-border);
+    }
+
+    /* ── Animations ── */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.7rem;
+      }
+
+      .hero {
+        padding: 0 1.5rem;
+      }
+
+      section {
+        padding: 4rem 1.5rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .edu-card {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .contact-section {
+        padding: 4rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">BAI HAOCHEN</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">// AI Solutions Engineer &amp; Full-Stack Developer</div>
+      <h1>Bai <span class="accent">Haochen</span></h1>
+      <p class="hero-desc">
+        Building intelligent systems at the intersection of AI and cloud infrastructure.
+        Currently providing AI consulting for one of Japan's largest regional banks.
+      </p>
+      <div class="hero-stats">
+        <div><span class="stat-num">5+</span><span class="stat-label">Years Experience</span></div>
+        <div><span class="stat-num">10+</span><span class="stat-label">Projects Delivered</span></div>
+        <div><span class="stat-num">3</span><span class="stat-label">Languages Spoken</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-label reveal">// 01. About</div>
+    <h2 class="section-title reveal">Who I Am</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm an AI solutions engineer and full-stack developer based in Japan. With a Master's degree from The Chinese
+          University of Hong Kong (fully English-medium) and experience across startups and enterprise, I bring a unique
+          blend of analytical thinking and hands-on engineering.</p>
+        <p>My current focus is applying AI — particularly RAG, LLM, and data analytics — to solve real business
+          challenges in banking and enterprise. I've led teams of up to 10 engineers and managed end-to-end project
+          lifecycles.</p>
+        <p>Trilingual in Chinese (native), English (fluent, TOEFL 112), and Japanese (business, JLPT N1).</p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <div class="highlight-icon">🤖</div>
+          <div class="highlight-title">AI & LLM</div>
+          <div class="highlight-desc">RAG, GraphRAG, LangChain, prompt engineering, LightGBM, SHAP</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">☁️</div>
+          <div class="highlight-title">Cloud & Infra</div>
+          <div class="highlight-desc">AWS certified architect, cloud migration, infrastructure design</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">⚡</div>
+          <div class="highlight-title">Full-Stack</div>
+          <div class="highlight-desc">React, Go, Python, TypeScript, FastAPI, gRPC, GraphQL</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">📊</div>
+          <div class="highlight-title">Data & Analytics</div>
+          <div class="highlight-desc">Feature engineering, regression analysis, ML modeling, data visualization</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="section-label reveal">// 02. Experience</div>
+    <h2 class="section-title reveal">Where I've Worked</h2>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dates">Jan 2025 — Present</div>
+        <div class="timeline-role">AI Solutions Engineer / Consultant</div>
+        <div class="timeline-company">Edge Technology Inc. (TSE-listed) · Tokyo</div>
+        <div class="timeline-desc">
+          Providing AI consulting and solution development for Chiba Bank. Led AI-driven projects including: internal
+          regulation restructuring using AI document parsing and Mermaid workflow visualization; bank AI infrastructure
+          advisory reviewing vendor proposals; three HR performance evaluation AI tools (feedback coaching, achievement
+          search engine, data analytics platform); and an automated document verification system using OCR + LLM with
+          ResNet/KNN pattern classification.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">RAG</span><span class="tag">LLM</span><span class="tag">LightGBM</span>
+          <span class="tag">SHAP</span><span class="tag">OCR</span><span class="tag">ResNet</span>
+          <span class="tag">AWS</span><span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dates">Sep 2022 — Jan 2025</div>
+        <div class="timeline-role">Project Manager / Senior Full-Stack Engineer</div>
+        <div class="timeline-company">Xi'an Startia Soft Inc. · Tokyo</div>
+        <div class="timeline-desc">
+          Progressed from developer to PM/SE. Led 7 major projects: RAG-based AI agent platform with no-code workflow
+          builder (10-person team), enterprise on-premises to AWS cloud migration, interactive map platform, job portal
+          with AI-powered residence card verification (facial recognition + OCR), weekly reporting system, online
+          learning platform, and real-time messaging app frontend.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">React</span><span class="tag">Go</span><span class="tag">GraphQL</span>
+          <span class="tag">gRPC</span><span class="tag">AWS</span><span class="tag">Docker</span>
+          <span class="tag">PostgreSQL</span><span class="tag">GraphRAG</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dates">Jan 2022 — Aug 2022</div>
+        <div class="timeline-role">Full-Stack Developer</div>
+        <div class="timeline-company">ByteX Inc. · Tokyo</div>
+        <div class="timeline-desc">
+          Built centralized bot management system integrating multiple messaging platforms (LINE Works, Slack).
+          Developed order management, shipment, and email notification features for a delivery management system.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MongoDB</span>
+          <span class="tag">Go</span><span class="tag">React</span><span class="tag">AWS</span>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dates">Sep 2020 — Sep 2021</div>
+        <div class="timeline-role">Audio Editor / Program Editor</div>
+        <div class="timeline-company">Himalaya Japan Inc. · Tokyo</div>
+        <div class="timeline-desc">
+          Edited and produced audio content and programs for one of Asia's largest podcasting and audio streaming
+          platforms.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="section-label reveal">// 03. Skills</div>
+    <h2 class="section-title reveal">What I Work With</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-items">
+          <span class="skill-pill">Python</span><span class="skill-pill">Go</span>
+          <span class="skill-pill">TypeScript</span><span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">Shell/Bash</span><span class="skill-pill">PHP</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-items">
+          <span class="skill-pill">React</span><span class="skill-pill">Vue.js</span>
+          <span class="skill-pill">HTML/CSS</span><span class="skill-pill">Tailwind</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend & API</div>
+        <div class="skill-items">
+          <span class="skill-pill">FastAPI</span><span class="skill-pill">Flask</span>
+          <span class="skill-pill">Laravel</span><span class="skill-pill">gRPC</span>
+          <span class="skill-pill">GraphQL</span><span class="skill-pill">REST</span>
+          <span class="skill-pill">Celery</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">AI / Machine Learning</div>
+        <div class="skill-items">
+          <span class="skill-pill">LangChain</span><span class="skill-pill">RAG</span>
+          <span class="skill-pill">GraphRAG</span><span class="skill-pill">LLM Prompting</span>
+          <span class="skill-pill">LightGBM</span><span class="skill-pill">SHAP</span>
+          <span class="skill-pill">ResNet</span><span class="skill-pill">OCR</span>
+          <span class="skill-pill">OpenAI API</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Infrastructure</div>
+        <div class="skill-items">
+          <span class="skill-pill">AWS</span><span class="skill-pill">EC2</span>
+          <span class="skill-pill">ECS/Fargate</span><span class="skill-pill">Lambda</span>
+          <span class="skill-pill">S3</span><span class="skill-pill">CloudFront</span>
+          <span class="skill-pill">Docker</span><span class="skill-pill">Nginx</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Databases & Tools</div>
+        <div class="skill-items">
+          <span class="skill-pill">PostgreSQL</span><span class="skill-pill">MySQL</span>
+          <span class="skill-pill">MongoDB</span><span class="skill-pill">Redis</span>
+          <span class="skill-pill">Git</span><span class="skill-pill">Docker Compose</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="section-label reveal">// 04. Education</div>
+    <h2 class="section-title reveal">Where I Studied</h2>
+
+    <div class="edu-card reveal">
+      <div class="edu-year">2017 — 2019</div>
+      <div>
+        <div class="edu-degree">M.A. in Political Philosophy</div>
+        <div class="edu-school">The Chinese University of Hong Kong (CUHK)</div>
+        <div class="edu-note">Fully English-medium graduate program — all coursework, research, thesis writing, and
+          instruction conducted in English. Developed strong analytical writing, critical reasoning, and cross-cultural
+          communication skills.</div>
+      </div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-year">2019 — 2020</div>
+      <div>
+        <div class="edu-degree">Japanese Language Program</div>
+        <div class="edu-school">Keio University, Tokyo</div>
+        <div class="edu-note">Intensive Japanese language study, achieving JLPT N1 certification.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certs">
+    <div class="section-label reveal">// 05. Certifications</div>
+    <h2 class="section-title reveal">Credentials</h2>
+    <div class="certs-grid reveal">
+      <div class="cert-card">
+        <div class="cert-badge">🏅</div>
+        <div class="cert-name">AWS Certified AI Practitioner</div>
+        <div class="cert-year">2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">☁️</div>
+        <div class="cert-name">AWS Solutions Architect — Associate</div>
+        <div class="cert-year">2022</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">☁️</div>
+        <div class="cert-name">AWS Cloud Practitioner</div>
+        <div class="cert-year">2022</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🧠</div>
+        <div class="cert-name">JDLA G検定 (Deep Learning)</div>
+        <div class="cert-year">2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🤖</div>
+        <div class="cert-name">Google AI Essentials</div>
+        <div class="cert-year">2024</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🐧</div>
+        <div class="cert-name">LPIC-1</div>
+        <div class="cert-year">2022</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section" id="contact">
+    <div class="section-label reveal">// 06. Get In Touch</div>
+    <h2 class="section-title reveal">Let's Connect</h2>
+    <p class="reveal" style="color: var(--muted); max-width: 500px; margin: 0 auto 1.5rem; font-size: 1rem;">
+      I'm always open to discussing new opportunities, especially in AI, cloud architecture, and full-stack engineering.
+    </p>
+    <a href="mailto:jackbaihaochen@gmail.com" class="contact-email reveal">jackbaihaochen@gmail.com</a>
+    <div class="contact-langs reveal">
+      Feel free to reach out in English, Chinese, or Japanese.
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed & Built by BAI HAOCHEN · 2026</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').style.padding =
+        window.scrollY > 80 ? '0.8rem 3rem' : '1.2rem 3rem';
+    });
+  </script>
+</body>
+
+</html>
